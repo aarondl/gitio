@@ -14,7 +14,7 @@ import (
 func Shorten(longurl string) (string, error) {
 	resp, err := http.PostForm(`https://git.io/create`, url.Values{`url`: {longurl}})
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 	if resp.StatusCode != 200 {
 		return "", fmt.Errorf("Expected 200 response, got: %d", resp.StatusCode)
