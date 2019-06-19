@@ -8,11 +8,15 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 // Shorten a long github url.
 func Shorten(longurl string) (string, error) {
-	resp, err := http.PostForm(`https://git.io/create`, url.Values{`url`: {longurl}})
+	client := new(http.Client)
+	client.Timeout = 5 * time.Second
+
+	resp, err := client.PostForm(`https://git.io/create`, url.Values{`url`: {longurl}})
 	if err != nil {
 		return "", err
 	}
